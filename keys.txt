@@ -1,0 +1,5 @@
+# One AES-128 candidate key per line
+TestKey000000001
+ExampleKey0000001
+PWNsatLabKey1234
+AnotherKey000001

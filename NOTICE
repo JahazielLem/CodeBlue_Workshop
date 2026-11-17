@@ -1,0 +1,16 @@
+Pwnsat Browser Lab
+==================
+
+This project reuses two files from the original Pwnsat / FlatSat satellite
+security workshop by "astrobyte":
+
+  firmware/spp.cpp, firmware/spp.h  — SPDX-License-Identifier: GPL-2.0-or-later
+  tools/pwnsat_protocol.py          — CCSDS SPP + AES-128 helper (from the workshop tools)
+
+These are vendored unmodified so the lab is self-contained. The firmware files
+carry GPL-2.0-or-later headers; this repository is therefore distributed under
+GPL-2.0-or-later (see LICENSE). The intentionally-vulnerable code, flags and the
+AES candidate key list (keys.txt) are training artifacts, not real secrets.
+
+The original workshop materials (the book, PDFs, packet captures, wordlists and
+the full ground-station tooling) are NOT included here.

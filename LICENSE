@@ -1,0 +1,13 @@
+This repository is licensed under the GNU General Public License v2.0 or later.
+
+    SPDX-License-Identifier: GPL-2.0-or-later
+
+It includes files (firmware/spp.cpp, firmware/spp.h) that carry GPL-2.0-or-later
+headers, so the combined work is distributed under the same terms. See NOTICE for
+provenance.
+
+The full license text is not bundled here. Add it with either:
+  * GitHub: "Add file" → create "LICENSE" → choose "GNU General Public License v2.0"
+  * CLI:    curl -L https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt -o LICENSE
+
+Canonical text: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html

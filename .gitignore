@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+venv/
+# V1 build artifacts (compiled on first use from firmware/spp.cpp)
+lab/v1/spp_harness
+lab/v1/spp_harness.dSYM/
+*.zip

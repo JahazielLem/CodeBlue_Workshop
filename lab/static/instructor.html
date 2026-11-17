@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pwnsat Lab — Instructor</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="topbar">
+  <span class="brand">PWNSAT LAB</span>
+  <span class="logochip" title="GSpace"><img src="gspace-logo.png" alt="GSpace"></span>
+  <span class="stat">Instructor console</span>
+  <span class="spacer"></span>
+  <button id="themetoggle" class="iconbtn" title="Theme">◐</button>
+  <button id="logout" style="display:none">Log out</button>
+</div>
+
+<div id="login" class="login">
+  <h1>Instructor access</h1>
+  <p>Enter the instructor password to manage student sessions.</p>
+  <input id="pw" type="password" placeholder="Password" autocomplete="off" autofocus>
+  <button id="loginbtn">Unlock</button>
+  <div class="err" id="loginerr"></div>
+</div>
+
+<div id="inst" style="display:none">
+  <div class="topnav">
+    <h2 style="margin:0;color:var(--accent)">Session monitor</h2>
+    <span class="spacer"></span>
+    <span class="stat" id="autostat" style="color:var(--dim);font-size:12px"></span>
+    <button id="refresh">Refresh</button>
+    <button id="resetall">Reset all</button>
+  </div>
+  <div class="cards" id="cards"></div>
+  <div style="overflow-x:auto">
+    <table class="sessions">
+      <thead><tr>
+        <th>Session</th><th>Health</th><th>Mode</th><th>Flags</th><th>Cmds</th>
+        <th>TM</th><th>Relays</th><th>Errors</th><th>Age</th><th>Idle</th><th>Actions</th>
+      </tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+<script src="instructor.js"></script>
+</body>
+</html>
