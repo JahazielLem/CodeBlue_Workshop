@@ -1,5 +1,7 @@
 # Pwnsat Browser Lab
 
+**English** · [日本語](README.ja.md)
+
 A browser-based, multi-student cybersecurity training lab for a simulated
 CCSDS satellite. Each student gets an isolated satellite instance and attacks
 it from a web UI — packet analyzer, terminal, satellite console — with seven
