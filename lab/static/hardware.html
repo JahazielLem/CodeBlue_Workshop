@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pwnsat Lab — Hardware</title>
+<link rel="stylesheet" href="style.css">
+<style>
+#hwmain { flex: 1; display: flex; min-height: 0; overflow: hidden; }
+#wiki { width: 290px; flex: 0 0 auto; background: var(--panel); border-right: 1px solid var(--line);
+  overflow-y: auto; padding: 14px; }
+#wiki.collapsed { display: none; }
+#wiki h2 { font-size: 13px; color: var(--accent); margin: 0 0 6px; }
+#wiki h3 { font-size: 12px; color: var(--fg); margin: 14px 0 4px; }
+#wiki p, #wiki li { font-size: 12px; color: var(--dim); }
+#wiki ol { margin: 4px 0; padding-left: 18px; } #wiki li { margin-bottom: 5px; }
+#wiki code { background: var(--panel2); padding: 1px 5px; border-radius: 4px; font-family: var(--mono); color: var(--accent); }
+#wiki .goal { color: var(--fg); }
+#target { width: 360px; flex: 0 0 auto; background: var(--panel); border-right: 1px solid var(--line);
+  overflow-y: auto; padding: 14px; }
+#target h3 { font-size: 12px; color: var(--accent); margin: 0 0 8px; text-transform: uppercase; letter-spacing: .4px; }
+.boardwrap { position: relative; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.boardwrap img { width: 100%; display: block; }
+.marker { position: absolute; border: 2px solid var(--accent); border-radius: 4px;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,.35); animation: pulse 1.6s infinite; }
+@keyframes pulse { 0%,100% { border-color: var(--accent); } 50% { border-color: transparent; } }
+.header-widget { margin-top: 14px; }
+.pins { display: flex; gap: 8px; justify-content: center; padding: 14px 8px; background: var(--panel2);
+  border: 1px solid var(--line); border-radius: 8px; flex-wrap: wrap; }
+.pin { width: 42px; display: flex; flex-direction: column; align-items: center; gap: 5px; cursor: pointer; }
+.pad { width: 26px; height: 26px; border-radius: 50%; background: #caa63c; border: 2px solid #8a7126;
+  display: flex; align-items: center; justify-content: center; font: 700 11px var(--mono); color: #2a2208; }
+.pin.armed .pad, .pin:hover .pad { outline: 2px solid var(--accent); outline-offset: 2px; }
+.pin .wire { width: 20px; height: 6px; border-radius: 3px; background: transparent; }
+.pin .pn { font-size: 10px; color: var(--dim); font-family: var(--mono); }
+.pin .fn { font-size: 9px; color: var(--accent); font-family: var(--mono); min-height: 11px; }
+.pin .lbl { font-size: 9px; font-family: var(--mono); color: var(--accent); cursor: pointer;
+  min-height: 13px; padding: 0 3px; border-radius: 3px; border: 1px dashed transparent; margin-top: 1px; }
+.pin .lbl:hover { border-color: var(--line); }
+.pin .lbl.empty { color: var(--muted); }
+.pad.gndhint { outline: 2px dotted var(--muted); outline-offset: 2px; }
+.pad.gnd { box-shadow: 0 0 0 3px var(--fg); }
+.gndbtn { width: 100%; margin-top: 10px; }
+.gndbtn.armed { outline: 2px solid var(--accent); }
+
+#analyzer { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+#hwtools { display: flex; gap: 10px; align-items: center; padding: 8px 12px; background: var(--panel);
+  border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+#hwtools label { font-size: 12px; color: var(--dim); }
+#hwtools .spb { font-family: var(--mono); font-size: 12px; color: var(--dim); }
+#capbtn { background: var(--accent); color: var(--accent-ink); border: 0; font-weight: 700; padding: 6px 16px; }
+.rack { flex: 0 0 auto; max-height: 230px; overflow-y: auto; border-bottom: 1px solid var(--line); }
+.chrow { display: flex; align-items: center; gap: 10px; padding: 5px 12px; border-bottom: 1px solid var(--rowline);
+  font-family: var(--mono); font-size: 12px; }
+.chrow .sw { width: 12px; height: 12px; border-radius: 3px; flex: 0 0 auto; }
+.chrow .cid { width: 26px; color: var(--fg); font-weight: 700; }
+.chrow .conn { width: 150px; color: var(--dim); }
+.chrow .conn b { color: var(--fg); }
+.chrow .cls { flex: 1; color: var(--dim); font-size: 11px; }
+.chrow button { padding: 3px 9px; font-size: 11px; }
+.chrow select { padding: 3px 6px; font-size: 11px; font-family: var(--mono); }
+.chrow.armed { background: var(--sel); }
+#scope { flex: 1; overflow: auto; padding: 10px 12px; background: var(--bg); }
+#scope svg { display: block; }
+#hwconsole { flex: 0 0 auto; height: 120px; overflow-y: auto; padding: 8px 12px; background: var(--panel);
+  border-top: 1px solid var(--line); font-family: var(--mono); font-size: 12px; white-space: pre-wrap; }
+.ok { color: var(--accent); } .warn { color: var(--warn); } .bad { color: var(--err); }
+#obj { padding: 8px 14px; background: var(--panel2); border-bottom: 1px solid var(--line); font-size: 12.5px; color: var(--fg); }
+#obj b { color: var(--accent); }
+</style>
+</head>
+<body>
+<div id="topbar">
+  <span class="brand">PWNSAT LAB</span>
+  <span class="logochip" title="GSpace"><img src="gspace-logo.png" alt="GSpace"></span>
+  <span class="stat" id="hwtitle">Hardware Lab · Logic Analyzer</span>
+  <span class="spacer"></span>
+  <select id="exsel">
+    <option value="map">0 · Map the header</option>
+    <option value="uart">UART — GPS</option>
+    <option value="i2c">I2C — Accelerometer</option>
+    <option value="spi">SPI — Flash</option>
+  </select>
+  <button id="wikitoggle">Wiki</button>
+  <button id="themetoggle" class="iconbtn" title="Theme">◐</button>
+  <a href="index.html"><button id="backbtn">← Lab</button></a>
+  <select id="lang"><option value="en">English</option><option value="ja">日本語</option></select>
+</div>
+<div id="obj"></div>
+<div id="hwmain">
+  <aside id="wiki" class="collapsed"></aside>
+  <aside id="target">
+    <h3 id="targethdr">Target under test</h3>
+    <div class="boardwrap"><img src="board.png" alt="FlatSat"><div class="marker" id="marker"></div></div>
+    <div class="header-widget">
+      <h3 id="probehdr">Probe points</h3>
+      <div class="pins" id="pins"></div>
+      <button id="gndclip" class="gndbtn">⏚ Ground clip</button>
+      <div id="pinhint" style="font-size:11px;color:var(--dim);margin-top:8px"></div>
+    </div>
+  </aside>
+  <div id="analyzer">
+    <div id="hwtools">
+      <label id="srlabel">Sample rate</label>
+      <select id="srate">
+        <option value="500000">500 kHz</option>
+        <option value="1000000">1 MHz</option>
+        <option value="4000000" selected>4 MHz</option>
+        <option value="16000000">16 MHz</option>
+      </select>
+      <span class="spb" id="spb"></span>
+      <span class="spacer" style="flex:1"></span>
+      <button id="capbtn">▶ Start capture</button>
+    </div>
+    <div class="rack" id="rack"></div>
+    <div id="scope"></div>
+    <div id="hwconsole"></div>
+  </div>
+</div>
+<script src="hardware.js"></script>
+</body>
+</html>

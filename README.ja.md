@@ -31,6 +31,10 @@ terminal command → real CCSDS SPP frame → SatelliteSim dispatch → TM reply
 - **V1 — SPP パーサのオーバーリード**：**実際の** `firmware/spp.cpp` を隔離された
   サブプロセスで実行。宣言長の大きい短いパケットが隣接メモリを漏洩させる。
 
+さらに `/hardware.html` の**ハードウェアラボ** — ロジックアナライザのシミュレータで、
+基板のラベルなしパッドを探って各信号を特定し、グランドクリップを接続し、サンプル
+レートを設定して、**I2C・SPI・UART** を実際の波形生成とデコードでダンプします。
+
 ## リポジトリ構成
 
 ```

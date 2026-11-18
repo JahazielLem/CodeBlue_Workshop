@@ -30,6 +30,11 @@ Implemented exercises (switch via the Wiki panel's Exercise selector):
 - **V1 — SPP parser over-read**: runs the **real** `firmware/spp.cpp` in an isolated
   subprocess; a short packet with a large declared length leaks adjacent memory.
 
+Plus a **hardware lab** at `/hardware.html` — a logic-analyzer simulator where
+students probe the board's unlabeled pads to find each signal, attach a ground
+clip, set the sample rate and dump **I2C, SPI and UART** with real waveform
+generation and decoding.
+
 ## Repository layout
 
 ```
